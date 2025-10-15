@@ -1,21 +1,21 @@
 #!/bin/bash
 
-datadir='[Your directory]'
+datadir='/Users/lenatrnovec/scTotalRNA/'
 
-lib_id='[Sub-library ID]' # each sub-library is first demultiplexed based on i5 index using standard Illumina demultiplex pipeline
+lib_id='Dicty_D0_P3_TTTCGACA' # each sub-library is first demultiplexed based on i5 index using standard Illumina demultiplex pipeline
 
 cd ${datadir}
 
-read1='[read 1 file name]'
-read2='[read 2 file name]'
+read1='Dicty_D0_P3_TTTCGACA_1'
+read2='Dicty_D0_P3_TTTCGACA_2'
 
-gzip -d ${read2}.fq.gz
+gunzip -d ${read2}.fq.gz
 
-python ['Your directory']/Extract_cell_index.py ${read2}.fq ${lib_id}_read_index.txt 
+python /Users/lenatrnovec/scTotalRNA/snapTotal-seq/scripts/Extract_cell_index.py ${read2}.fq ${lib_id}_read_index.txt 
 
 gzip ${read2}.fq
 
-cat '[Your directory]'/cell_index_list.txt | while read LINE
+cat /Users/lenatrnovec/scTotalRNA/snapTotal-seq/scripts/cell_index_list.txt | while read LINE
 do
 	grep ${LINE} ${lib_id}_read_index.txt > ${lib_id}_${LINE}.txt
 	

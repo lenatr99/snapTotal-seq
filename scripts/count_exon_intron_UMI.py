@@ -25,7 +25,7 @@ exon_dict = {}	# Gene: UMI
 id2symbol = {}	# gene_id: gene_symbol
 
 # import gene list
-gene_fi = open('[Your directory]/human_gene_list.txt', 'r')
+gene_fi = open('/Users/lenatrnovec/scTotalRNA/snapTotal-seq/scripts/dicty_gene_list.txt', 'r')
 for gene in gene_fi:
 	id2symbol[gene.strip('\n').split('\t')[0]] = gene.strip('\n').split('\t')[1]
 	transcript_dict[gene.strip('\n').split('\t')[0]] = {}
@@ -35,7 +35,10 @@ gene_fi.close()
 print(len(id2symbol))
 
 # transcript-mapped amplicons
-del gene
+try:
+	del gene
+except NameError:
+	pass
 transcript_mapping_fi = open(sample + '_mapped_barcode.transcript.dat', 'r')
 for mapping_line in transcript_mapping_fi:
 	mapping_info = mapping_line.strip('\n').split(' ')
@@ -49,11 +52,14 @@ for mapping_line in transcript_mapping_fi:
 transcript_mapping_fi.close()
 
 # exon-mapped amplicons
-del mapping_line
-del mapping_info
-del gene
-del bcd
-del read_id
+try:
+	del mapping_line
+	del mapping_info
+	del gene
+	del bcd
+	del read_id
+except NameError:
+	pass
 exon_mapping_fi = open(sample + '_mapped_barcode.exon.dat', 'r')
 for mapping_line in exon_mapping_fi:
 	mapping_info = mapping_line.strip('\n').split(' ')
@@ -67,9 +73,12 @@ for mapping_line in exon_mapping_fi:
 exon_mapping_fi.close()
 
 # Separate exon and intron UMI for each gene
-del bcd
-del read_id
-del gene
+try:
+	del bcd
+	del read_id
+	del gene
+except NameError:
+	pass
 intron_count = {}	# gene_id: umi count
 exon_count = {}	# gene_id: umi count
 gene_list = id2symbol.keys()
@@ -99,7 +108,10 @@ exon_fo.write('Gene_id' + '\t' + 'Gene_name' + '\t' + 'UMI_count' + '\n')
 intron_fo = open(sample + '.intron_barcode_count.txt', 'w')
 intron_fo.write('Gene_id' + '\t' + 'Gene_name' + '\t' + 'UMI_count' + '\n')
 
-del gene
+try:
+	del gene
+except NameError:
+	pass
 for gene in gene_list:
 	transcript_fo.write(gene + '\t' + id2symbol[gene] + '\t' + str(len(transcript_dict[gene])) + '\n')
 	exon_fo.write(gene + '\t' + id2symbol[gene] + '\t' + str(exon_count[gene]) + '\n')

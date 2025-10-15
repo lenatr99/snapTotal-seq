@@ -5,10 +5,10 @@
 import os
 import pandas as pd
 
-os.chdir('[Your directory]')
+os.chdir('/Users/lenatrnovec/scTotalRNA/')
 
 id2symbol = {}
-gene_file = open('[Your directory]/human_gene_list.txt', 'r')
+gene_file = open('/Users/lenatrnovec/scTotalRNA/snapTotal-seq/scripts/dicty_gene_list.txt', 'r')
 
 gene_list = []
 
@@ -21,7 +21,7 @@ gene_file.close()
 del line
 del line_list
 expression_dict = {}
-sample_file = open("[Your cell list]", "r")
+sample_file = open("cell_list.txt", "r")
 sample_list = []
 for line in sample_file:
 	sample = line.strip('\n')
@@ -42,7 +42,7 @@ for gene in gene_list:
 column_names = ['gene_symbol'] + sample_list
 
 count_df = pd.DataFrame(expression_dict, columns = column_names, index = gene_list)
-count_df.to_csv('[Your output file name]', sep = '\t', index = True, header = True)
+count_df.to_csv('DICTY_intron_UMI_count_matrix.txt', sep = '\t', index = True, header = True)
 
 
 
