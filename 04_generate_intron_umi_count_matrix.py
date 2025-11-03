@@ -28,7 +28,7 @@ for line in sample_file:
 	print(sample)
 	sample_list.append(sample)
 	expression_dict[sample] = []
-	filename = sample + '/split_exon_intron/' + sample + '.intron_barcode_count.txt'
+	filename = 'cells/' + sample + '/split_exon_intron/' + sample + '.intron_barcode_count.txt'
 	df = pd.read_table(filename, header=0, index_col = 'Gene_id')
 	for gene in gene_list:
 		expression_dict[sample].append(df.loc[gene, 'UMI_count'])
@@ -42,7 +42,8 @@ for gene in gene_list:
 column_names = ['gene_symbol'] + sample_list
 
 count_df = pd.DataFrame(expression_dict, columns = column_names, index = gene_list)
-count_df.to_csv('DICTY_intron_UMI_count_matrix.txt', sep = '\t', index = True, header = True)
+count_df.index.name = 'gene_id'
+count_df.to_csv('snapTotal-seq/Analysis/DICTY_intron_UMI_count_matrix.txt', sep = '\t', index = True, header = True)
 
 
 

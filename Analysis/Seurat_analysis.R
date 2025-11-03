@@ -12,9 +12,9 @@ setwd('/Users/lenatrnovec/scTotalRNA/snapTotal-seq/Analysis')
 # load data
 exon_df = read.table('DICTY_exon_UMI_count_matrix.txt',
                      header = T, sep = '\t', row.names = 2, as.is = T)
-nucidx = grep('^MT-', exon_df$gene_symbol, invert = T)
+nucidx = grep('^MT-', exon_df$gene_id, invert = T)
 exon_df = exon_df[nucidx,]
-exon_df = exon_df[!duplicated(exon_df$gene_symbol),]
+exon_df = exon_df[!duplicated(exon_df$gene_id),]
 n = dim(exon_df)[2]
 exon_mat = as.matrix(exon_df[, 2:n])
 dim(exon_mat)
@@ -26,7 +26,7 @@ table(keep)
 exon_mat = exon_mat[keep, ]
 gene_list = rownames(exon_mat)
 cell_list = colnames(exon_mat)
-rownames(exon_mat) = exon_df[gene_list, 'gene_symbol']
+rownames(exon_mat) = exon_df[gene_list, 'gene_id']
 exon_total_umi = colSums(exon_mat)
 
 # Optional: load cell cycle assignment from reCAT
@@ -77,7 +77,7 @@ intron_df = read.table('DICTY_intron_UMI_count_matrix.txt',
                        header=T, row.names = 2, sep='\t', as.is = T)
 intron_mat = as.matrix(intron_df[gene_list, cell_list])
 dim(intron_mat)
-rownames(intron_mat) = exon_df[gene_list, 'gene_symbol']
+rownames(intron_mat) = exon_df[gene_list, 'gene_id']
 
 # Add unspliced data to Seurat object
 d[["unspliced"]] = CreateAssayObject(counts = intron_mat)

@@ -9,7 +9,7 @@ scv.settings.set_figure_params('scvelo')  # for beautified visualization
 scv.settings.n_jobs = 12
 
 if __name__ == '__main__':
-    adata = sc.read_h5ad("/Users/lenatrnovec/scTotalRNA/snapTotal-seq/Analysis/HEK293T_snapTotal.h5ad")
+    adata = sc.read_h5ad("/Users/lenatrnovec/scTotalRNA/snapTotal-seq/Analysis/DICTY_snapTotal.h5ad")
 
     adata.uns['cell_cycle_colors'] = ['#FF7F0E','#2CA02C','#6699FF']
     adata.uns['seurat_clusters_colors'] = ['#f8766d','#a3a500','#00bf7d','#00b0f6','#e76bf3']
@@ -25,7 +25,7 @@ if __name__ == '__main__':
     scv.tl.velocity(adata, mode='dynamical')
     scv.tl.velocity_graph(adata)
 
-    scv.pl.velocity_embedding_stream(adata, basis='pca', color='cell_cycle', alpha=0.4)
+    # scv.pl.velocity_embedding_stream(adata, basis='pca', color='cell_cycle', alpha=0.4)
     scv.pl.velocity_embedding_stream(adata, basis='umap', color='seurat_clusters', alpha=0.4)
 
     # velocity confidence score
